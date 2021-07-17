@@ -9,17 +9,18 @@ where
 	category = 'Documentary';
     
 -- 2. Find out the number of sci-fi movies rented by the store managed by Jon Stephens.
-
 select count(*)
-	from staff inner join store on manager_staff_id = staff.staff_id
-			inner join rental on rental.staff_id = staff.staff_id
-            inner join inventory on inventory.inventory_id = rental.inventory_id
-            inner join film_list on FID = film_id
-where
-	first_name = 'Jon' and
-    last_name = 'Stephens' and
-    category = 'Sci-Fi';
-    
+	from (
+	select distinct film_list.*
+		from staff inner join store on manager_staff_id = staff.staff_id 
+				inner join rental on rental.staff_id = staff.staff_id
+				inner join inventory on inventory.inventory_id = rental.inventory_id and store.store_id = inventory.store_id
+				inner join film_list on FID = film_id
+	where
+		first_name = 'Jon' and
+		last_name = 'Stephens' and
+		category = 'Sci-Fi'
+    ) as t;
 -- 3. Find out the total sales from Animation movies. 
 
 select * from sales_by_film_category

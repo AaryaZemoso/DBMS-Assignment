@@ -2,7 +2,7 @@ use sakila;
 
 -- 1. Find out the PG-13 rated comedy movies. DO NOT use the film_list table. 
 
-select * 
+select film.title
 	from film inner join film_category on film.film_id = film_category.film_id 
 			inner join category on category.category_id = film_category.category_id
 where 
@@ -11,8 +11,7 @@ where
     
 -- 2. Find out the top 3 rented horror movies. 
 
-
-select * 
+select film.title
 	from film inner join film_category on film.film_id = film_category.film_id 
 			inner join category on category.category_id = film_category.category_id
 where 
@@ -23,7 +22,7 @@ limit 3;
     
 -- 3. Find out the list of customers from India who have rented sports movies.
 
-select customer_list.*
+select distinct customer_list.name
 	from customer_list inner join rental on rental.customer_id = customer_list.ID
 			inner join inventory on inventory.inventory_id = rental.inventory_id
             inner join film_list on inventory.film_id = film_list.FID
@@ -32,7 +31,7 @@ where
     category = 'Sports';
     
 -- 4.  Find out the list of customers from Canada who have rented “NICK WAHLBERG” movies.
-select customer_list.*, film_list.title
+select distinct customer_list.name
 	from customer_list inner join rental on rental.customer_id = customer_list.ID
 			inner join inventory on inventory.inventory_id = rental.inventory_id
             inner join film_list on inventory.film_id = film_list.FID
